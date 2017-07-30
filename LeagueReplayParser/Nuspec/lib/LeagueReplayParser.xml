@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LeagueReplayParser</name>
+    </assembly>
+    <members>
+        <member name="T:LeagueReplayParser.League">
+            <summary>
+            Contains all the data form League of Legends (its path and its replays' path).
+            You will be able to start a replay thanks to this class.
+            </summary>
+        </member>
+        <member name="F:LeagueReplayParser.League.DefaultRiotDirectory">
+            <summary>
+            The default Riot directory.
+            </summary>
+        </member>
+        <member name="F:LeagueReplayParser.League.DefaultReplaysDirectory">
+            <summary>
+            The default Replays' directory.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.League.#ctor(System.String,System.String)">
+            <summary>
+            Creates an instance of a League object which contains the Riot and replays directories
+            </summary>
+            <param name="riotDirectory"></param>
+            <param name="replayDirectory"></param>
+        </member>
+        <member name="M:LeagueReplayParser.League.GetCurrentLeagueVersion">
+            <summary>
+            Gets the current League of Legends version.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.League.GetRiotDirectory(System.String)">
+            <summary>
+            Verifies if the given riot directory contains the right files.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.League.GetReplayDirectory(System.String)">
+            <summary>
+            Verifies if the given replay directory exists.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.League.GetLeagueProcess(LeagueReplayParser.Replay)">
+            <summary>
+            Get the League of Legends process info.
+            It is internally managed. You normally won't have to use it.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LeagueReplayParser.League.StartReplayAsync(LeagueReplayParser.Replay)">
+            <summary>
+            Starts the given replay and returns true once the League of Legends process is closed.
+            </summary>
+        </member>
+        <member name="P:LeagueReplayParser.IReplay.Path">
+            <summary>
+            Path to the replay file.
+            </summary>
+        </member>
+        <member name="P:LeagueReplayParser.Player.Summoner1">
+            <summary>
+            Use Static Riot API to determine which summoner spell this ID corresponds to.
+            </summary>
+        </member>
+        <member name="P:LeagueReplayParser.Player.Summoner2">
+            <summary>
+            Use Static Riot API to determine which summoner spell this ID corresponds to.
+            </summary>
+        </member>
+        <member name="T:LeagueReplayParser.Replay">
+            <summary>
+            Replay class representing replay files.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.Replay.ParseAsync(System.String)">
+            <summary>
+            Aynchronously returns a Replay instance given the replay file.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.Replay.Parse(System.String)">
+            <summary>
+            Returns a Replay instance given the replay file.
+            </summary>
+        </member>
+        <member name="T:LeagueReplayParser.Parser">
+            <summary>
+            Helper class for JSON parsing.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.Parser.GetReplayAsync">
+            <summary>
+            Aynchronously gets the replay instance corresponding to the given replay file.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.Parser.GetReplay">
+            <summary>
+            Gets the replay instance corresponding to the given replay file.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.Parser.GetJSON(System.String)">
+            <summary>
+            Gets the JSON part of the replay file contents.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.Parser.GetPlayers(Newtonsoft.Json.Linq.JArray)">
+            <summary>
+            Gets the purple team object thanks to the json array
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.Parser.GetTeam(LeagueReplayParser.Statistics.Side,System.Collections.Generic.List{LeagueReplayParser.Player})">
+            <summary>
+            Gets the players in the given team side.
+            </summary>
+        </member>
+        <member name="T:LeagueReplayParser.Statistics">
+            <summary>
+            Static statistic class for replay files.
+            </summary>
+        </member>
+        <member name="T:LeagueReplayParser.Statistics.KDA">
+            <summary>
+            Player's KDA class.
+            </summary>
+        </member>
+        <member name="P:LeagueReplayParser.Statistics.KDA.Kills">
+            <summary>
+            Total champion killed.
+            </summary>
+        </member>
+        <member name="P:LeagueReplayParser.Statistics.KDA.Deaths">
+            <summary>
+            Total deaths.
+            </summary>
+        </member>
+        <member name="P:LeagueReplayParser.Statistics.KDA.Assistances">
+            <summary>
+            Total assistances.
+            </summary>
+        </member>
+        <member name="T:LeagueReplayParser.Statistics.Inventory">
+            <summary>
+            Player's inventory.
+            Those are the IDs of the items. To get the real items, use the static riot API (RiotSharp for instance).
+            </summary>
+        </member>
+        <member name="T:LeagueReplayParser.Statistics.Lane">
+            <summary>
+            The lane the player was playing on. 
+            </summary>
+        </member>
+        <member name="T:LeagueReplayParser.Statistics.Issue">
+            <summary>
+            The issue of the game for a team.
+            </summary>
+        </member>
+        <member name="T:LeagueReplayParser.Statistics.Side">
+            <summary>
+            The side of the map the team was on.
+            </summary>
+        </member>
+    </members>
+</doc>

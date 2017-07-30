@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Hawezo.LeagueTools.LeagueReplayParser</id>
+        <version>0.1</version>
+        <title>LeagueReplayParser</title>
+        <authors>Enzo Innocenzi</authors>
+        <owners>Enzo Innocenzi</owners>
+        <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>A library which allows to parse data from a replay file as well as to play it.</description>
+        <releaseNotes>First release.</releaseNotes>
+        <copyright>Copyright 2017 © Enzo Innocenzi</copyright>
+        <language>en-EN</language>
+        <tags>League of Legends Replay File Parse JSON</tags>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5.2">
+                <dependency id="Newtonsoft.Json" version="10.0.3" />
+            </group>
+        </dependencies>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Data" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Core" targetFramework="" />
+            <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="" />
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="..\bin\Release\LeagueReplayParser.dll" target="lib\LeagueReplayParser.dll" />
+        <file src="..\bin\Release\LeagueReplayParser.xml" target="lib\LeagueReplayParser.xml" />
+    </files>
+</package>
