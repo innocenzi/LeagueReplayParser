@@ -34,6 +34,21 @@ namespace LeagueReplayParser
         public Version GameVersion { get; set; }
         public Team PurpleTeam { get; set; }
         public Team BlueTeam { get; set; }
+        public List<Player> Players { get; set; }
+        public Team WiningTeam
+        {
+            get
+            {
+                return (PurpleTeam.Issue == Issue.Victory ? PurpleTeam : BlueTeam);
+            }
+        }
+        public Team LosingTeam
+        {
+            get
+            {
+                return (PurpleTeam.Issue == Issue.Victory ? PurpleTeam : BlueTeam);
+            }
+        }
 
         // See IReplay constructor
         internal Replay(string replayPath) : base(replayPath) { }
@@ -41,17 +56,17 @@ namespace LeagueReplayParser
         /// <summary>
         /// Aynchronously returns a Replay instance given the replay file.
         /// </summary>
-        public async static Task<Replay> ParseAsync(string replayPath)
+        public async static Task<Replay> ParseAsync(string replayPath, Encoding encoding = null)
         {
-            return await new Parser(replayPath).GetReplayAsync();
+            return await new Parser(replayPath).GetReplayAsync(encoding ?? Encoding.Default);
         }
 
         /// <summary>
         /// Returns a Replay instance given the replay file.
         /// </summary>
-        public static Replay Parse(string replayPath)
+        public static Replay Parse(string replayPath, Encoding encoding = null)
         {
-            return new Parser(replayPath).GetReplay();
+            return new Parser(replayPath).GetReplay(encoding ?? Encoding.Default);
         }
 
 
@@ -69,11 +84,11 @@ namespace LeagueReplayParser
         /// <summary>
         /// Aynchronously gets the replay instance corresponding to the given replay file.
         /// </summary>
-        public async Task<Replay> GetReplayAsync()
+        public async Task<Replay> GetReplayAsync(Encoding encoding)
         {
             return await Task<Replay>.Run(() =>
             {
-                return this.GetReplay();
+                return this.GetReplay(encoding ?? Encoding.Default);
             });
 
         }
@@ -81,11 +96,11 @@ namespace LeagueReplayParser
         /// <summary>
         /// Gets the replay instance corresponding to the given replay file.
         /// </summary>
-        public Replay GetReplay()
+        public Replay GetReplay(Encoding encoding)
         {
             Replay replay = new Replay(this.Path.FullName);
 
-            string replayFileContents = string.Join("", File.ReadLines(this.Path.FullName, Encoding.Default).Take(20).ToList<string>().ToArray<string>());
+            string replayFileContents = string.Join("", File.ReadLines(this.Path.FullName, encoding ?? Encoding.Default).Take(20).ToList<string>().ToArray<string>());
             JObject json = this.GetJSON(replayFileContents);
             List<Player> players = this.GetPlayers(JArray.Parse(json["statsJson"].ToObject<string>()));
 
@@ -93,6 +108,7 @@ namespace LeagueReplayParser
             replay.GameVersion = new Version(json["gameVersion"].ToObject<string>());
             replay.PurpleTeam = this.GetTeam(Side.Purple, players);
             replay.BlueTeam = this.GetTeam(Side.Blue, players);
+            replay.Players = players;
 
             return replay;
         }

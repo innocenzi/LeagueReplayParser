@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LeagueReplayParser
@@ -104,9 +105,9 @@ namespace LeagueReplayParser
         /// <summary>
         /// Asynchronously loads all the replays in the replay folder.
         /// </summary>
-        public async Task LoadReplaysAsync()
+        public async Task LoadReplaysAsync(Encoding encoding = null)
         {
-            this.Replays = await this.GetReplaysAsync();
+            this.Replays = await this.GetReplaysAsync(encoding ?? Encoding.Default);
         }
 
         /// <summary>
@@ -177,7 +178,7 @@ namespace LeagueReplayParser
         /// Aynchronously gets all the available replays.
         /// </summary>
         /// <exception cref="IOException">Thrown if the ReplayDirectory is not set yet.</exception>
-        private async Task<List<Replay>> GetReplaysAsync()
+        private async Task<List<Replay>> GetReplaysAsync(Encoding encoding = null)
         {
             if (this.ReplayDirectory == null || !this.ReplayDirectory.Exists)
                 throw new IOException("Replay directory does not exists.");
@@ -187,7 +188,7 @@ namespace LeagueReplayParser
                 List<Replay> replays = new List<Replay>() { };
 
                 foreach (FileInfo replayFile in this.ReplayDirectory.GetFiles("*.rofl"))
-                    replays.Add(await Replay.ParseAsync(replayFile.FullName));
+                    replays.Add(await Replay.ParseAsync(replayFile.FullName, encoding ?? Encoding.Default));
 
                 return replays;
             });

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeagueReplayParser", "LeagueReplayParser\LeagueReplayParser.csproj", "{FFEABC10-45F4-4951-8D96-118D4CB2A168}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{F84A008D-080A-4CC0-ABA4-935BACC70424}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FFEABC10-45F4-4951-8D96-118D4CB2A168}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFEABC10-45F4-4951-8D96-118D4CB2A168}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFEABC10-45F4-4951-8D96-118D4CB2A168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F84A008D-080A-4CC0-ABA4-935BACC70424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F84A008D-080A-4CC0-ABA4-935BACC70424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F84A008D-080A-4CC0-ABA4-935BACC70424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F84A008D-080A-4CC0-ABA4-935BACC70424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

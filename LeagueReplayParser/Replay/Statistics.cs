@@ -29,6 +29,18 @@
             /// Total assistances.
             /// </summary>
             public int Assistances { get; set; }
+
+            /// <summary>
+            /// Gets the KDA for these statistics.
+            /// </summary>
+            /// <returns></returns>
+            public float Ratio
+            {
+                get
+                {
+                    return (Kills + Assistances) / Deaths;
+                }
+            }
         }
 
         /// <summary>
