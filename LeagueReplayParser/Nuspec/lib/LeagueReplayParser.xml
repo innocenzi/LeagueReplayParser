@@ -10,6 +10,11 @@
             You will be able to start a replay thanks to this class.
             </summary>
         </member>
+        <member name="P:LeagueReplayParser.League.LeagueVersion">
+            <summary>
+            The actual League version.
+            </summary>
+        </member>
         <member name="F:LeagueReplayParser.League.DefaultRiotDirectory">
             <summary>
             The default Riot directory.
@@ -20,12 +25,31 @@
             The default Replays' directory.
             </summary>
         </member>
-        <member name="M:LeagueReplayParser.League.#ctor(System.String,System.String)">
+        <member name="M:LeagueReplayParser.League.#ctor(System.String,System.String,System.Boolean)">
             <summary>
             Creates an instance of a League object which contains the Riot and replays directories
             </summary>
-            <param name="riotDirectory"></param>
-            <param name="replayDirectory"></param>
+        </member>
+        <member name="M:LeagueReplayParser.League.StartReplayAsync(LeagueReplayParser.Replay)">
+            <summary>
+            Starts the given replay and returns true once the League of Legends process is closed.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.League.StartReplayAsync(System.IO.FileInfo)">
+            <summary>
+            Starts the given replay and returns true once the League of Legends process is closed.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.League.LoadReplaysAsync">
+            <summary>
+            Asynchronously loads all the replays in the replay folder.
+            </summary>
+        </member>
+        <member name="M:LeagueReplayParser.League.LoadReplays">
+            <summary>
+            Loads all the replays in the replay folder.
+            Alias for LoadReplaysAsync.Result.
+            </summary>
         </member>
         <member name="M:LeagueReplayParser.League.GetCurrentLeagueVersion">
             <summary>
@@ -42,17 +66,18 @@
             Verifies if the given replay directory exists.
             </summary>
         </member>
-        <member name="M:LeagueReplayParser.League.GetLeagueProcess(LeagueReplayParser.Replay)">
+        <member name="M:LeagueReplayParser.League.GetReplaysAsync">
+            <summary>
+            Aynchronously gets all the available replays.
+            </summary>
+            <exception cref="T:System.IO.IOException">Thrown if the ReplayDirectory is not set yet.</exception>
+        </member>
+        <member name="M:LeagueReplayParser.League.GetLeagueProcess(System.String)">
             <summary>
             Get the League of Legends process info.
             It is internally managed. You normally won't have to use it.
             </summary>
             <returns></returns>
-        </member>
-        <member name="M:LeagueReplayParser.League.StartReplayAsync(LeagueReplayParser.Replay)">
-            <summary>
-            Starts the given replay and returns true once the League of Legends process is closed.
-            </summary>
         </member>
         <member name="P:LeagueReplayParser.IReplay.Path">
             <summary>
@@ -72,6 +97,11 @@
         <member name="T:LeagueReplayParser.Replay">
             <summary>
             Replay class representing replay files.
+            </summary>
+        </member>
+        <member name="P:LeagueReplayParser.Replay.CanBePlayed">
+            <summary>
+            Defines weither yes or not this replay can be played. Returns null if no League object has been initialized and thus the League version is unknown.
             </summary>
         </member>
         <member name="M:LeagueReplayParser.Replay.ParseAsync(System.String)">

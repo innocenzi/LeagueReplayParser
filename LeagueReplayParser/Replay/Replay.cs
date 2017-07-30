@@ -18,6 +18,18 @@ namespace LeagueReplayParser
     public class Replay : IReplay
     {
 
+        /// <summary>
+        /// Defines weither yes or not this replay can be played. Returns null if no League object has been initialized and thus the League version is unknown.
+        /// </summary>
+        public bool? CanBePlayed
+        {
+            get
+            {
+                if (League.LeagueVersion == null)
+                    return null;
+                return !(this.GameVersion < League.LeagueVersion);
+            }
+        }
         public TimeSpan GameLength { get; set; }
         public Version GameVersion { get; set; }
         public Team PurpleTeam { get; set; }

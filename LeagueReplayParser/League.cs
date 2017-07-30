@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -12,6 +13,11 @@ namespace LeagueReplayParser
     /// </summary>
     public class League
     {
+
+        /// <summary>
+        /// The actual League version.
+        /// </summary>
+        public static Version LeagueVersion { get; private set; }
         
         /// <summary>
         /// The default Riot directory.
@@ -27,22 +33,91 @@ namespace LeagueReplayParser
 
         public DirectoryInfo RiotDirectory { get; private set; }
         public DirectoryInfo ReplayDirectory { get; private set; }
-        public Version Version { get; private set; }
+        public List<Replay> Replays { get; set; }
         public Replay CurrentReplay { get; private set; }
+        public Version Version { get; private set; }
 
-        #pragma warning restore CS1591
+#pragma warning restore CS1591
 
         /// <summary>
         /// Creates an instance of a League object which contains the Riot and replays directories
         /// </summary>
-        /// <param name="riotDirectory"></param>
-        /// <param name="replayDirectory"></param>
-        public League(string riotDirectory, string replayDirectory = null)
+        public League(string riotDirectory, string replayDirectory = null, bool loadReplays = false)
         {
+            this.Replays = new List<Replay>() { };
             this.RiotDirectory = this.GetRiotDirectory(riotDirectory);
-            this.ReplayDirectory = this.GetReplayDirectory(replayDirectory ?? League.DefaultReplaysDirectory);
             this.Version = this.GetCurrentLeagueVersion();
+            this.ReplayDirectory = this.GetReplayDirectory(replayDirectory ?? League.DefaultReplaysDirectory);
+
+            League.LeagueVersion = this.Version;
+
+            if (loadReplays)
+                this.LoadReplays();
         }
+
+        /// <summary>
+        /// Starts the given replay and returns true once the League of Legends process is closed.
+        /// </summary>
+        public async Task<bool> StartReplayAsync(Replay replay)
+        {
+            return await this.StartReplayAsync(replay.Path);
+        }
+
+        /// <summary>
+        /// Starts the given replay and returns true once the League of Legends process is closed.
+        /// </summary>
+        public async Task<bool> StartReplayAsync(FileInfo replay)
+        {
+            if (!replay.Exists)
+                throw new IOException("The given replay file does not exist.");
+
+            bool replayTask = await Task<bool>.Run(async () =>
+            {
+                TaskCompletionSource<bool> task = new TaskCompletionSource<bool>();
+
+                Process league = new Process()
+                {
+                    StartInfo = this.GetLeagueProcess(replay.FullName),
+                    EnableRaisingEvents = true
+                };
+
+                league.Exited += (sender, args) =>
+                {
+                    task.SetResult(true);
+                    league.Dispose();
+                };
+
+                bool started = league.Start();
+                if (!started)
+                    throw new Exception("Unable to start League of Legends.exe.");
+
+                this.CurrentReplay = await Replay.ParseAsync(replay.FullName);
+
+                return task.Task.Result;
+            }).ConfigureAwait(false);
+
+            this.CurrentReplay = null;
+            return replayTask;
+        }
+
+
+        /// <summary>
+        /// Asynchronously loads all the replays in the replay folder.
+        /// </summary>
+        public async Task LoadReplaysAsync()
+        {
+            this.Replays = await this.GetReplaysAsync();
+        }
+
+        /// <summary>
+        /// Loads all the replays in the replay folder.
+        /// Alias for LoadReplaysAsync.Result.
+        /// </summary>
+        public void LoadReplays()
+        {
+            this.Replays = this.GetReplaysAsync().Result;
+        }
+
 
         #region DataGathering
 
@@ -99,11 +174,31 @@ namespace LeagueReplayParser
         }
 
         /// <summary>
+        /// Aynchronously gets all the available replays.
+        /// </summary>
+        /// <exception cref="IOException">Thrown if the ReplayDirectory is not set yet.</exception>
+        private async Task<List<Replay>> GetReplaysAsync()
+        {
+            if (this.ReplayDirectory == null || !this.ReplayDirectory.Exists)
+                throw new IOException("Replay directory does not exists.");
+
+            return await Task<List<Replay>>.Run(async () =>
+            {
+                List<Replay> replays = new List<Replay>() { };
+
+                foreach (FileInfo replayFile in this.ReplayDirectory.GetFiles("*.rofl"))
+                    replays.Add(await Replay.ParseAsync(replayFile.FullName));
+
+                return replays;
+            });
+        }
+
+        /// <summary>
         /// Get the League of Legends process info.
         /// It is internally managed. You normally won't have to use it.
         /// </summary>
         /// <returns></returns>
-        public ProcessStartInfo GetLeagueProcess(Replay replay)
+        public ProcessStartInfo GetLeagueProcess(string replayPath)
         {
             if (!this.RiotDirectory.Exists)
                 throw new IOException("Given Riot directory does not exists.");
@@ -127,47 +222,13 @@ namespace LeagueReplayParser
                 WorkingDirectory = leagueExecutableDirectory.FullName,
                 FileName = "League of Legends.exe",
                 Verb = "open",
-                Arguments = $"\"{replay.Path}\"",
+                Arguments = $"\"{replayPath}\"",
                 WindowStyle = ProcessWindowStyle.Hidden
             };
         }
 
         #endregion
 
-
-        /// <summary>
-        /// Starts the given replay and returns true once the League of Legends process is closed.
-        /// </summary>
-        public async Task<bool> StartReplayAsync(Replay replay)
-        {
-            bool replayTask = await Task<bool>.Run(() =>
-            {
-                TaskCompletionSource<bool> task = new TaskCompletionSource<bool>();
-
-                Process league = new Process()
-                {
-                    StartInfo = this.GetLeagueProcess(replay),
-                    EnableRaisingEvents = true
-                };
-
-                league.Exited += (sender, args) =>
-                {
-                    task.SetResult(true);
-                    league.Dispose();
-                };
-
-                bool started = league.Start();
-                if (!started)
-                    throw new InvalidOperationException("Unable to start League of Legends.exe.");
-
-                this.CurrentReplay = replay;
-
-                return task.Task.Result;
-            }).ConfigureAwait(false);
-
-            this.CurrentReplay = null;
-            return replayTask;
-        }
 
     }
 }

@@ -1,1 +1,0 @@
-nuget.exe pack Hawezo.LeagueTools.LeagueReplayParser.0.1.nuspec
