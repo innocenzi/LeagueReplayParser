@@ -4,7 +4,7 @@ This is a library which allows you to easily parse a League of Legend replay fil
 
 # Getting started
 
-[![NuGet version](https://badge.fury.io/nu/LeagueTools.LeagueReplayParser.svg)](https://badge.fury.io/nu/LeagueTools.LeagueReplayParser) [![GitHub version](https://badge.fury.io/gh/hawezo%2FLeagueReplayParser.svg)](https://badge.fury.io/gh/hawezo%2FLeagueReplayParser)
+[![NuGet version](https://badge.fury.io/nu/Hawezo.LeagueTools.LeagueReplayParser.svg)](https://badge.fury.io/nu/LeagueTools.LeagueReplayParser) [![GitHub version](https://badge.fury.io/gh/hawezo%2FLeagueReplayParser.svg)](https://badge.fury.io/gh/hawezo%2FLeagueReplayParser)
 
 ## Installaton
 
