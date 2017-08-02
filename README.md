@@ -4,10 +4,13 @@ This is a library which allows you to easily parse a League of Legend replay fil
 
 # Getting started
 
-## Installing
+[![NuGet version](https://badge.fury.io/nu/LeagueTools.LeagueReplayParser.svg)](https://badge.fury.io/nu/LeagueTools.LeagueReplayParser) [![GitHub version](https://badge.fury.io/gh/hawezo%2FLeagueReplayParser.svg)](https://badge.fury.io/gh/hawezo%2FLeagueReplayParser)
+
+## Installaton
+
 You will first need to install the library by either [downloading it](https://github.com/hawezo/LeagueReplayParser/archive/master.zip) or [installing it from NuGet](https://www.nuget.org/packages/Hawezo.LeagueTools.LeagueReplayParser).
 
-## Using it
+## Usage
 
 At first, you will need to deal with the League object. It is the object that will give you informations about the installed League of Legends version and which will allow you to start a replay.
 
