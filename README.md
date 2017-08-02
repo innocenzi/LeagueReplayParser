@@ -72,7 +72,7 @@ foreach (Player player in replay.PurpleTeam.Players)
 
 ### Example code
 
-As an example, this code will display some data from a the first available replay file as well as the stats from the wining team.
+As an example, this code will display some data from the first available replay file as well as the stats from the wining team.
 
 ```csharp
 League league = new League(League.DefaultRiotDirectory);
