@@ -11,7 +11,7 @@ This is a library which allows you to easily parse a League of Legend replay fil
 [![NuGet](https://img.shields.io/nuget/v/Hawezo.LeagueTools.LeagueReplayParser.svg?style=flat-square)](https://www.nuget.org/packages/Hawezo.LeagueTools.LeagueReplayParser)
 [![NuGet downloads](https://img.shields.io/nuget/dt/Hawezo.LeagueTools.LeagueReplayParser.svg?style=flat-square)](https://www.nuget.org/packages/Hawezo.LeagueTools.LeagueReplayParser)
 
-## Installaton
+## Installation
 
 You will first need to install the library by either [downloading it](https://github.com/hawezo/LeagueReplayParser/archive/master.zip) or [installing it from NuGet](https://www.nuget.org/packages/Hawezo.LeagueTools.LeagueReplayParser).
 
